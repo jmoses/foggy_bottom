@@ -1,0 +1,3 @@
+module FoggyBottom
+  # Your code goes here...
+end
