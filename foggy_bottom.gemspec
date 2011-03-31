@@ -12,7 +12,8 @@ Gem::Specification.new do |s|
   s.summary     = %q{Ruby API wrapper for FogBugz}
   s.description = %q{It wraps the FogBugz API.}
 
-  s.rubyforge_project = "foggy_bottom"
+  #s.rubyforge_project = "foggy_bottom"
+  s.add_dependency('nokogiri')
 
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
