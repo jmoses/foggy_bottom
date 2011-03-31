@@ -1,0 +1,4 @@
+FoggyBottom is a Ruby wrapper around the FogBugz API.  It's not a direct match, so you don't 
+need to know how to use the FogBugz API to use this library.
+
+It's written in "normal" Ruby syntax and patterns, so no strange "port" of another library.
