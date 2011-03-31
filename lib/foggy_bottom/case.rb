@@ -60,6 +60,10 @@ class FoggyBottom::Case
     @changed_attributes.clear
   end
 
+  def to_s
+    "#{ixBug} - #{sTitle}"
+  end
+
   protected
     def attributes
       @attributes
