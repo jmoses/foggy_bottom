@@ -11,21 +11,32 @@ class FoggyBottom::Case
 
   delegate :logger, :to => :api
 
-  def self.find( case_id, api )
-    details = api.exec(:search, :q => case_id, :cols => ALL_COLUMNS.join(',') ).at_css("case")
+  class << self
+    def find( case_id, api )
+      details = api.exec(:search, :q => case_id, :cols => FoggyBottom::Columns::Case::ALL_COLUMNS.join(',') ).at_css("case")
 
-    if details
+      create_from_xml(details, api) if details
+    end
+
+    def search( terms, api )
+      api.exec(:search, :q => terms, :cols => FoggyBottom::Columns::Case::ALL_COLUMNS.join(',')).css('case').collect do |details|
+        create_from_xml(details, api)
+      end
+    end
+
+    def create_from_xml(xml, api)
       new( {}.tap do |attributes|
-        (ALL_COLUMNS - %w(tags)).each do |col|
-          attributes[col] = details.at_css(col).content
+        (FoggyBottom::Columns::Case::ALL_COLUMNS - %w(tags)).each do |col|
+          attributes[col] = xml.at_css(col).content
         end
 
         attributes['tags'] = [].tap do |tags|
-          details.css("tag").each {|t| tags << t.content }
+          xml.css("tag").each {|t| tags << t.content }
         end
       end).tap do |instance|
         instance.api = api
       end
+
     end
   end
 

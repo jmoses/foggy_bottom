@@ -26,6 +26,10 @@ module FoggyBottom
     end
     alias :[] :find
 
+    def search( terms )
+      Case.search(terms, self)
+    end
+
     protected
       def fetch_token(username, password, token_filename)
         @token ||= begin
