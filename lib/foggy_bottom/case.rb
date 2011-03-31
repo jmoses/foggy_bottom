@@ -37,13 +37,13 @@ class FoggyBottom::Case
     new_attributes.each_pair {|k,v| send("#{k}=", v) }
   end
 
-  def save
+  def save( comment = nil )
     return unless changed?
     
     @previously_changed = changes
 
     logger.debug("Saving changes for #{ixBug} columns #{changed.join(', ')}")
-    api.exec(:edit, parameters)
+    api.exec(:edit, parameters('sEvent' => comment))
     logger.debug(" done")
 
     @changed_attributes.clear
@@ -54,7 +54,7 @@ class FoggyBottom::Case
       @attributes
     end
 
-    def parameters
-      changed.inject({}) {|memo, key| memo.merge(key => send(key))}.merge('ixBug' => ixBug)
+    def parameters( extra = {} )
+      changed.inject({}) {|memo, key| memo.merge(key => send(key))}.merge(extra).merge('ixBug' => ixBug)
     end
 end
