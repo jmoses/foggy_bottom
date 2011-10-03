@@ -51,13 +51,11 @@ class FoggyBottom::Case
   def save( comment = nil )
     return unless changed?
     
-    @previously_changed = changes
+    save!(comment)
+  end
 
-    logger.debug("Saving changes for #{ixBug} columns #{changed.join(', ')}")
-    api.exec(:edit, parameters('sEvent' => comment))
-    logger.debug(" done")
-
-    @changed_attributes.clear
+  def resolve( comment = nil )
+    save!(comment, :resolve)
   end
 
   def to_s
@@ -67,6 +65,16 @@ class FoggyBottom::Case
   protected
     def attributes
       @attributes
+    end
+
+    def save!(comment, action = :edit)
+      @previously_changed = changes
+
+      logger.debug("Saving changes for #{ixBug} columns #{changed.join(', ')} with action #{action}")
+      api.exec(action, parameters('sEvent' => comment))
+      logger.debug(" done")
+
+      @changed_attributes.clear
     end
 
     def parameters( extra = {} )

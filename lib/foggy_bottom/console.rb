@@ -11,6 +11,8 @@ class FoggyBottom::Console
       case cmd
       when :search
         search(get("Terms"))
+      when :resolve
+        resolve(get("Case ID"))
       when :quit
         exit 0
       else
@@ -21,7 +23,7 @@ class FoggyBottom::Console
 
   protected
     def show_menu
-      commands = %w( search quit )
+      commands = %w( search resolve quit )
       choice = (Hirb::Menu.render commands, :helper_class => false, :directions => false).first
       choice ? choice.to_sym : :unknown 
     end
@@ -44,5 +46,14 @@ class FoggyBottom::Console
 
       cases = api.search(terms)
       choose(cases.map(&:to_s))
+    end
+
+    def resolve( case_id )
+      bug = api.find(case_id)
+      if bug
+        bug.resolve
+      else
+        puts "Bug #{case_id} not found"
+      end
     end
 end
