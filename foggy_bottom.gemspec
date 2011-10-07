@@ -15,7 +15,7 @@ Gem::Specification.new do |s|
   #s.rubyforge_project = "foggy_bottom"
   s.add_dependency('nokogiri')
   s.add_dependency('activemodel', '~> 3.0.0')
-  s.add_dependency('hirb')
+  s.add_development_dependency('hirb')
 
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
