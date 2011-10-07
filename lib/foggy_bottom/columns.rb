@@ -1,5 +1,34 @@
 module FoggyBottom
   module Columns
+    module Status
+      def self.included(base)
+        base.class_eval do
+          ALL_COLUMNS.each do |column|
+            define_method(column) do
+              @attributes[column]
+            end
+
+            define_method("#{column}=") do |arg|
+              send("#{column}_will_change!") unless send(column) == arg
+
+              @attributes[column] = arg
+            end
+          end
+        end
+      end
+
+      ALL_COLUMNS = %w(
+        ixStatus
+        sStatus
+        ixCategory
+        fWorkDone
+        fResolved
+        fDuplicate
+        fDeleted
+        iOrder
+      )
+    end
+
     module Case
       def self.included(base)
         base.class_eval do

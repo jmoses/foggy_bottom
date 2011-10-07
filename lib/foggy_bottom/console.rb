@@ -13,6 +13,8 @@ class FoggyBottom::Console
         search(get("Terms"))
       when :resolve
         resolve(get("Case ID"))
+      when :status_list
+        puts FoggyBottom::Status.all(api).inspect
       when :quit
         exit 0
       else
@@ -23,7 +25,7 @@ class FoggyBottom::Console
 
   protected
     def show_menu
-      commands = %w( search resolve quit )
+      commands = %w( search resolve status_list quit )
       choice = (Hirb::Menu.render commands, :helper_class => false, :directions => false).first
       choice ? choice.to_sym : :unknown 
     end
