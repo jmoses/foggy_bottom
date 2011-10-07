@@ -1,3 +1,4 @@
+require 'hirb'
 class FoggyBottom::Console
   delegate :logger, :to => :api
 

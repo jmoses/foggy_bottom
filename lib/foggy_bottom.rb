@@ -7,10 +7,8 @@ require 'delegate'
 
 require 'active_support/core_ext/array'
 require 'active_model'
-require 'hirb'
 
 require 'foggy_bottom/api'
 require 'foggy_bottom/columns'
 require 'foggy_bottom/case'
 require 'foggy_bottom/status'
-require 'foggy_bottom/console'
