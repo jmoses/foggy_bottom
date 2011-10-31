@@ -70,7 +70,8 @@ module FoggyBottom
       end
 
       def build_url(cmd, args)
-        url + endpoint + args.merge(:cmd => cmd.to_s, :token => token).inject([]) {|memo, (key, value)| memo << "#{key}=#{CGI.escape(value.to_s)}" }.join("&")
+        args.merge!(:token => token) if token.present?
+        url + endpoint + args.merge(:cmd => cmd.to_s).inject([]) {|memo, (key, value)| memo << "#{key}=#{CGI.escape(value.to_s)}" }.join("&")
       end
   end
 end
